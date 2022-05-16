@@ -6,6 +6,9 @@
 .position-relative{
     position: relative;
 }
+.width_540{
+  width: 540px !important;
+}
 .header-navbar{
     height: 100px;
     padding-top: 30px;
@@ -21,12 +24,13 @@
     bottom:  -20px;
 
 }
-.margin_left_right_10{
-    margin-left: 10px;
-    margin-right: 10px;
+.margin_bottom_10{
+    margin-bottom: 10px;
 }
-.padding_left_right_50{
-    padding: 0 50px 0 50px;
+.margin_right_50{
+    
+    margin-right: 50px;
+    margin-bottom: 8px;
 }
 .padding_left_right_50:hover{
     opacity: 0.9;
@@ -215,6 +219,7 @@
 .contact-icon{
     font-size: 22px;
     margin-left: 10px;
+    justify-content: center;
 }
 a{
     text-decoration: none;
@@ -242,22 +247,25 @@ a{
                 <div class="collapse navbar-collapse position-left " id="navbarSupportedContent">
                   <ul class="navbar-nav mr-auto">
                       
+                    <form class="form-inline my-2 my-lg-0">
+                    
+                      <input class="form-control mr-sm-2 width_540" type="search" placeholder="Tra cứu đơn hàng" aria-label="Tìm Kiếm">
+                      <button class="btn btn-outline-success my-2 my-sm-0" type="submit">Tìm Kiếm</button>
+                    </form>
 
-                    <li class="nav-item  padding_left_right_50 cursor_pointer margin_left_right_10 border_radius_30 backgroud_color">
-                        <a class="nav-link color-text " href="#">Đăng Ký</a>
+                    <li class="nav-item   cursor_pointer   ">
+                        <a class="nav-link color-text " href="#">VuTienLinh</a>
                       </li>
 
-                      <li class="nav-item  padding_left_right_50 cursor_pointer  margin_left_right_10 border_radius_30 backgroud_color ">
-                        <a class="nav-link color-text " href="#">Đăng Nhập</a>
+                      <li class="nav-item cursor_pointer margin_right_50 ">
+                        <a class="" href="#">
+                          <i class="fa-solid fa-circle-user contact-icon  "></i>
+                        </a>
                       </li>
 
                   </ul>
                   
-                  <form class="form-inline my-2 my-lg-0">
-                    
-                    <input class="form-control mr-sm-2" type="search" placeholder="Tìm Kiếm" aria-label="Tìm Kiếm">
-                    <button class="btn btn-outline-success my-2 my-sm-0" type="submit">Tìm Kiếm</button>
-                  </form>
+                 
                 </div>
               </nav>
         </div>
@@ -271,7 +279,11 @@ a{
                     Trang Chủ 
                   </a>
                 </li>
-
+                <li class="nav-item  padding_left_right_50 cursor_pointer  margin_left_right_10 border_radius_30 ">
+                  <a class="nav-link" href="#">
+                    Tạo Đơn 
+                  </a>
+                </li>
                 <li class="nav-item">
                   <a class="nav-link" href="#">Dich Vụ</a>
                   <i class="fa-solid fa-circle-chevron-down"></i>

@@ -1,6 +1,6 @@
 from app import app, pool 
 from flask import render_template
-from app.forms import TestForm
+from app.forms import TestForm, DangKyDonForm
 from app.forms import User
 from flask import (
     Flask,

@@ -1,0 +1,56 @@
+{% extends "base.html" %}
+{% block content %}
+    <form method="POST">
+        {{ form.hidden_tag() }}
+
+        {{ form.makh.label() }}
+        {{ form.makh() }}
+        <br>
+        {{ form.tenkh.label() }}
+        {{ form.tenkh() }}
+        <br>
+        {{ form.dc_kh.label() }}
+        {{ form.dc_kh() }}
+        <br>
+        {{ form.sdt.label() }}
+        {{ form.sdt() }}
+        <br>
+        {{ form.dc_gui.label() }}
+        {{ form.dc_gui() }}
+        <br>
+        {{ form.dc_nhan.label() }}
+        {{ form.dc_nhan() }}
+        <br>
+        {{ form.ghichu.label() }}
+        {{ form.ghichu() }}
+        <br>
+        {{ form.mota.label() }}
+        {{ form.mota() }}
+        <br>
+        {{ form.dai.label() }}
+        {{ form.dai() }}
+        <br>
+        {{ form.rong.label() }}
+        {{ form.rong() }}
+        <br>
+        {{ form.cao.label() }}
+        {{ form.cao() }}
+        <br>
+        {{ form.kl.label() }}
+        {{ form.kl() }}
+        <br>
+        {{ form.ml.label() }}
+        {{ form.ml() }}
+        <br>
+        {{ form.cod.label() }}
+        {{ form.cod() }}
+        <br>
+        {{ form.tennn.label() }}
+        {{ form.tennn() }}
+        <br>
+        {{ form.sdt_nn.label() }}
+        {{ form.sdt_nn() }}
+        <br>
+        {{ form.submit() }}
+    </form>
+{% endblock %}

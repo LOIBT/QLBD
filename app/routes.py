@@ -44,6 +44,37 @@ def login1():
         pool.release(connection)
     return render_template('login1.html', form=form2)
 
+@app.route('/dangkydonhang', methods=['GET', 'POST'])
+def dkdh():
+    form2 = DangKyDonForm()
+    if form2.validate_on_submit():
+        makh = form2.makh.data
+        tenkh = form2.tenkh.data
+        dc_kh = form2.dc_kh.data
+        sdt = form2.sdt.data
+        dc_gui = form2.dc_gui.data
+        dc_nhan = form2.dc_nhan.data
+        ghichu = form2.ghichu.data
+        mota = form2.mota.data
+        dai = form2.dai.data
+        rong = form2.rong.data
+        cao = form2.cao.data
+        kl = form2.kl.data
+        ml = form2.ml.data
+        cod = form2.cod.data
+        tennn = form2.tennn.data
+        sdt_nn = form2.sdt_nn.data
+        connection = pool.acquire()
+        cursor = connection.cursor();
+        query = """call dangky_donhang(:makh,:tenkh,:dc_kh,:sdt,:dc_gui,:dc_nhan,:ghichu,:mota,:dai,:rong,:cao,:kl,:ml,:cod,:tennn,:sdt_nn,:manv)"""
+        if makh == -1:
+            query = """call dangky_donhang(null,:tenkh,:dc_kh,:sdt,:dc_gui,:dc_nhan,:ghichu,:mota,:dai,:rong,:cao,:kl,:ml,:cod,:tennn,:sdt_nn,:manv)"""
+            cursor.execute(query, [tenkh, dc_kh, sdt, dc_gui, dc_nhan,ghichu, mota,dai,rong,cao,kl,ml,cod,tennn,sdt_nn, 1])
+        else:
+            cursor.execute(query, [makh, tenkh, dc_kh, sdt, dc_gui, dc_nhan,ghichu, mota,dai,rong,cao,kl,ml,cod,tennn,sdt_nn, 1])
+        connection.commit()
+        pool.release(connection)
+    return render_template('dangkydonhang.html', form=form2)
 
 
 

@@ -40,6 +40,10 @@ class DangKyDonForm(FlaskForm):
     sdt_nn = StringField('So dien thoai nguoi nhan:', validators=[DataRequired()])
     submit = SubmitField('Xac nhan')
 
+class SearchForm(FlaskForm):
+    mavandon = StringField(label='Ma van don:', validators=[DataRequired()]) 
+    submit = SubmitField('Xac nhan')
+
 
 class User:
     def __init__(self, id, username, password):

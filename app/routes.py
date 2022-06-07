@@ -1,6 +1,6 @@
-from app import app, pool 
+from app import app, pool, dsphieu, phieu
 from flask import render_template
-from app.forms import TestForm, DangKyDonForm
+from app.forms import TestForm, DangKyDonForm, SearchForm
 from app.forms import User
 from flask import (
     Flask,
@@ -9,7 +9,8 @@ from flask import (
     render_template,
     request,
     session,
-    url_for
+    url_for,
+    flash
 )
 
 @app.route('/')
@@ -27,28 +28,11 @@ def get():
     return str(r)
 
 
-@app.route('/login1', methods=['GET', 'POST'])
-def login1():
-    form2 = TestForm()
-    if form2.validate_on_submit():
-        makh = form2.makh.data
-        tenkh = form2.tenkh.data
-        diachi = form2.diachi.data
-        sdt = form2.sdt.data
-        LoaiKH = form2.LoaiKH.data
-        connection = pool.acquire()
-        cursor = connection.cursor();
-        query = f"insert into KHACHHANG_T values ({makh},'{tenkh}','{diachi}','{sdt}','{LoaiKH}')"
-        cursor.execute(query)
-        connection.commit();
-        pool.release(connection)
-    return render_template('login1.html', form=form2)
-
 @app.route('/dangkydonhang', methods=['GET', 'POST'])
 def dkdh():
     form2 = DangKyDonForm()
     if form2.validate_on_submit():
-        makh = form2.makh.data
+        cccd = form2.cccd.data
         tenkh = form2.tenkh.data
         dc_kh = form2.dc_kh.data
         sdt = form2.sdt.data
@@ -66,15 +50,48 @@ def dkdh():
         sdt_nn = form2.sdt_nn.data
         connection = pool.acquire()
         cursor = connection.cursor();
-        query = """call dangky_donhang(:makh,:tenkh,:dc_kh,:sdt,:dc_gui,:dc_nhan,:ghichu,:mota,:dai,:rong,:cao,:kl,:ml,:cod,:tennn,:sdt_nn,:manv)"""
-        if makh == -1:
+        query = """call dangky_donhang(:cccd,:tenkh,:dc_kh,:sdt,:dc_gui,:dc_nhan,:ghichu,:mota,:dai,:rong,:cao,:kl,:ml,:cod,:tennn,:sdt_nn,:manv)"""
+        if cccd == "":
             query = """call dangky_donhang(null,:tenkh,:dc_kh,:sdt,:dc_gui,:dc_nhan,:ghichu,:mota,:dai,:rong,:cao,:kl,:ml,:cod,:tennn,:sdt_nn,:manv)"""
             cursor.execute(query, [tenkh, dc_kh, sdt, dc_gui, dc_nhan,ghichu, mota,dai,rong,cao,kl,ml,cod,tennn,sdt_nn, 1])
         else:
-            cursor.execute(query, [makh, tenkh, dc_kh, sdt, dc_gui, dc_nhan,ghichu, mota,dai,rong,cao,kl,ml,cod,tennn,sdt_nn, 1])
+            cursor.execute(query, [cccd, tenkh, dc_kh, sdt, dc_gui, dc_nhan,ghichu, mota,dai,rong,cao,kl,ml,cod,tennn,sdt_nn, 1])
         connection.commit()
         pool.release(connection)
+        flash('Dang ky don hang thanh cong')
+        return redirect(url_for('dkdh'))
     return render_template('dangkydonhang.html', form=form2)
+
+    @app.route('/tracuu', methods=['GET', 'POST'])
+def tracuu():
+    form2 = SearchForm();
+    if form2.validate_on_submit():
+        mvd = form2.mavandon.data
+        if len(dsphieu) != 0:
+            dsphieu.pop(0)
+        connection = pool.acquire()
+        cursor = connection.cursor();
+        query = """select p.madonhang, p.mavandon, p.tennguoinhan, p.sdtnhan, d.thoigiandat, d.diachigui, d.diachinhan, d.motasp, k.tenkhachhang, k.sdt
+    from phieudonhang p inner join donhangdk d
+    on p.madk = d.madk inner join khachhang k
+    on d.makhachhang = k.makhachhang
+    where mavandon = :mavandon"""
+        cursor.execute(query,[mvd])
+        r = cursor.fetchone()
+        phieu['madonhang'] = r[0]
+        phieu['mavandon'] = r[1]
+        phieu['tennguoigui'] = r[8]
+        phieu['sdtgui'] = r[9]
+        phieu['dcgui'] = r[5]
+        phieu['tennguoinhan'] = r[2]
+        phieu['sdtnhan'] = r[3]
+        phieu['dcnhan'] = r[6]
+        phieu['mota'] = r[7]
+        phieu['thoigiandat'] = r[4]
+        dsphieu.append(phieu)
+        pool.release(connection)
+        return redirect(url_for('tracuu'))
+    return render_template('tracuu.html', form=form2, dsphieu=dsphieu)
 
 
 

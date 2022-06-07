@@ -7,6 +7,20 @@ pool = cx_Oracle.SessionPool(user=config['oracle_user'], password=config['oracle
 app = Flask(__name__)
 app.config['SECRET_KEY'] = config['skey']
 
+dsphieu = []
+phieu = {
+    'madonhang': '',
+    'mavandon': '',
+    'tennguoigui': '',
+    'sdtgui': '',
+    'dcgui': '',
+    'tennguoinhan': '',
+    'sdtnhan': '',
+    'dcnhan': '',
+    'mota': '',
+    'thoigiandat': ''
+}
+
 from app import routes
 
 
